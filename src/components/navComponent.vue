@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-screen h-16 bg-bg-light flex justify-center items-center sticky top-0"
+    class="w-screen h-[7vh] bg-bg-light flex justify-center items-center sticky top-0 z-50"
   >
     <div
       class="flex justify-between items-center max-w-5xl m-auto text-white w-full px-4"
