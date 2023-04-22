@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import axios from "axios";
 
-//import emit from "vue3-emit";
-
 const { VITE_GEOCODING_TOKEN, VITE_GEOCODING_URL } = import.meta.env;
 
 const emit = defineEmits(["search"]);
@@ -36,7 +34,7 @@ const getSearchResults = () => {
 </script>
 
 <template>
-  <div class="w-full bg-white rounded-md overflow-hidden">
+  <div class="w-full bg-white rounded-md p-1 relative">
     <div class="relative">
       <input
         type="text"
@@ -51,7 +49,10 @@ const getSearchResults = () => {
         scale="1.2"
       />
     </div>
-    <ul class="bg-bg-light text-white w-full py-2" v-if="searchResults">
+    <ul
+      class="bg-bg-light text-white py-2 absolute translate-y-1 -translate-x-1 w-full rounded-md"
+      v-if="searchResults"
+    >
       <li
         v-for="result in searchResults"
         :key="result.id"
