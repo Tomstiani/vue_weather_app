@@ -13,7 +13,7 @@
 
       <!-- See code btn -->
       <a
-        href=""
+        href="https://github.com/Tomstiani/vue_weather_app"
         class="bg-bg-dark px-4 py-2 rounded-md hover:bg-bg-light hover:text-bg-dark transition-all duration-300 flex justify-center items-center gap-1"
       >
         <v-icon name="fa-code" />
