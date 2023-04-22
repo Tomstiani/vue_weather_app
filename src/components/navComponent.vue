@@ -15,6 +15,7 @@
       <a
         href="https://github.com/Tomstiani/vue_weather_app"
         class="bg-bg-dark px-4 py-2 rounded-md hover:bg-bg-light hover:text-bg-dark transition-all duration-300 flex justify-center items-center gap-1"
+        target="_blank"
       >
         <v-icon name="fa-code" />
         <span>See code</span>
