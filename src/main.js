@@ -5,9 +5,9 @@ import App from './App.vue'
 import router from './router'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaCloudSun, FaCode } from "oh-vue-icons/icons";
+import { FaCloudSun, FaCode, FaSearch } from "oh-vue-icons/icons";
 
-addIcons(FaCloudSun, FaCode);
+addIcons(FaCloudSun, FaCode, FaSearch);
 
 const app = createApp(App)
 
