@@ -9,6 +9,7 @@ const emit = defineEmits(["search"]);
 const searchQuery = ref("");
 const queryTimeout = ref(null);
 const searchResults = ref(null);
+const searchError = ref(false);
 
 // Emit search event with result
 const selectResult = (result) => {
@@ -22,10 +23,14 @@ const getSearchResults = () => {
   clearTimeout(queryTimeout.value);
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== "") {
-      const response = await axios.get(
-        `${VITE_GEOCODING_URL}/${searchQuery.value}.json?access_token=${VITE_GEOCODING_TOKEN}&types=place`
-      );
-      searchResults.value = response.data.features;
+      try {
+        const response = await axios.get(
+          `${VITE_GEOCODING_URL}/${searchQuery.value}.json?access_token=${VITE_GEOCODING_TOKEN}&types=place`
+        );
+        searchResults.value = response.data.features;
+      } catch (error) {
+        console.log(error);
+      }
       return;
     }
     searchResults.value = null;
@@ -51,8 +56,14 @@ const getSearchResults = () => {
     </div>
     <ul
       class="bg-bg-light text-white py-2 absolute translate-y-1 -translate-x-1 w-full rounded-md"
-      v-if="searchResults"
+      v-if="searchResults || searchError"
     >
+      <li v-if="searchError" class="px-4 py-2">
+        Something went wrong, please try again
+      </li>
+      <li v-if="searchResults.length === 0 && !searchError" class="px-4 py-2">
+        No results found, try a different search
+      </li>
       <li
         v-for="result in searchResults"
         :key="result.id"
