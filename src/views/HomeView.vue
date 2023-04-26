@@ -8,7 +8,6 @@ const selectedLocation = ref(null);
 
 const search = (query) => {
   selectedLocation.value = query;
-  console.log(selectedLocation.value);
 };
 </script>
 
