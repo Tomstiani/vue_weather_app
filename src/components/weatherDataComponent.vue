@@ -9,8 +9,6 @@ const props = defineProps(["selectedLocation"]);
 const selectedLocation = ref(null);
 const weatherData = ref(null);
 
-const { VITE_WEATHER_TOKEN } = import.meta.env;
-
 const getWeatherData = async (lon, lat) => {
   try {
     const weatherData = await axios.get(
@@ -43,7 +41,7 @@ watchEffect(async () => {
   <div class="h-[90%] w-screen flex justify-center items-center">
     <!-- No location selected -->
     <div
-      v-if="!selectedLocation && !weatherData"
+      v-if="!selectedLocation || !weatherData"
       class="h-full w-full flex justify-center items-center flex-col"
     >
       <v-icon name="fa-cloud-sun" scale="15" class="text-bg-light" />
@@ -67,7 +65,7 @@ watchEffect(async () => {
       </div>
 
       <!-- Current Weather -->
-      <CurrentWeatherComponent :weatherdata="weatherData" />
+      <CurrentWeatherComponent :weather-data="weatherData" />
     </div>
   </div>
 </template>

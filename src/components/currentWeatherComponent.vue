@@ -1,33 +1,67 @@
 <script setup>
 import { ref, watchEffect } from "vue";
+import { getWeatherIcon, getWindDirectionIcon } from "./../utils.ts";
 
-const props = defineProps(["weatherData"]);
+const props = defineProps(["weather-data"]);
 
-const weatherData = ref(null);
+const currentWeatherData = ref(null);
+const weatherIcon = ref(null);
+const windDirectionIcon = ref(null);
 
-watchEffect(async () => {
+watchEffect(() => {
   if (props.weatherData) {
-    weatherData.value = props.weatherData;
+    // Get current weather data
+    const currentHour = new Date().getHours();
+    currentWeatherData.value = props.weatherData.days[0].hourly[currentHour];
+    // Get current weather icon
+    weatherIcon.value = getWeatherIcon(currentWeatherData.value.weathercode);
+    windDirectionIcon.value = getWindDirectionIcon(
+      currentWeatherData.value.winddirection
+    );
   }
 });
 </script>
 
 <template>
-  <div
-    class="w-full bg-bg-light rounded-md p-4 mt-4 flex justify-center items-start flex-col"
-  >
+  <div class="bg-bg-light w-full rounded-md p-4 mt-4">
     <!-- Title -->
     <div class="text-white flex justify-start items-center gap-2">
       <v-icon name="fa-regular-clock" />
-      <p>Current Weather</p>
+      <p>The weather now</p>
     </div>
 
-    <!-- Current Weather -->
-    <div class="flex justify-center items-center w-full">
-      <!-- Icon -->
-      <div>
-        <v-icon name="fa-cloud-sun" scale="5" class="text-white" />
-        <p></p>
+    <!-- Weather Data -->
+    <div class="flex w-full justify-center items-end lg:gap-16">
+      <div class="flex justify-center items-end gap-4">
+        <!-- Weather Icon -->
+        <div class="flex justify-center items-center flex-col text-white">
+          <v-icon :name="weatherIcon.icon" scale="5" />
+        </div>
+
+        <!-- Temperature -->
+        <div class="flex justify-center items-center flex-col text-white">
+          <p class="text-6xl text-white">
+            {{ currentWeatherData.temperature }}°
+          </p>
+        </div>
+      </div>
+      <!-- Wind and pecipitaion -->
+      <div class="flex justify-center items-end gap-4">
+        <!-- Wind -->
+        <div class="flex justify-center items-center flex-col text-white">
+          <v-icon :name="windDirectionIcon" scale="2" />
+          <p class="text-xl text-white">
+            {{ Math.round(currentWeatherData.windspeed / 3.6) }} m/s
+          </p>
+        </div>
+
+        <!-- Precipitation -->
+        <div class="flex justify-center items-center flex-col text-white">
+          <v-icon name="bi-umbrella-fill" scale="2" />
+          <p class="text-xl text-white">
+            {{ currentWeatherData.precipitation }} mm
+          </p>
+        </div>
       </div>
     </div>
   </div>
