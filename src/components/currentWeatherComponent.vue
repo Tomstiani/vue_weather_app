@@ -23,44 +23,53 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="bg-bg-light w-full rounded-md p-4 mt-4">
-    <!-- Title -->
-    <div class="text-white flex justify-start items-center gap-2">
-      <v-icon name="fa-regular-clock" />
-      <p>The weather now</p>
-    </div>
-
+  <div
+    class="mt-4 flex flex-col gap-4 w-full md:w-fit md:bg-bg-light rounded-lg md:p-8"
+  >
     <!-- Weather Data -->
-    <div class="flex w-full justify-center items-end lg:gap-16">
-      <div class="flex justify-center items-end gap-4">
+    <div class="flex justify-center items-end lg:gap-16 w-full p-4">
+      <div class="flex justify-center items-center gap-4 w-full">
         <!-- Weather Icon -->
-        <div class="flex justify-center items-center flex-col text-white">
-          <v-icon :name="weatherIcon.icon" scale="5" />
+        <div
+          class="flex justify-center items-center flex-col text-white bg-bg-light rounded-full p-4 md:p-0"
+        >
+          <v-icon :name="weatherIcon.icon" scale="7" />
         </div>
-
         <!-- Temperature -->
-        <div class="flex justify-center items-center flex-col text-white">
-          <p class="text-6xl text-white">
-            {{ currentWeatherData.temperature }}°
+        <div class="flex justify-center items-center flex-col">
+          <p class="text-7xl text-white">
+            {{ Math.floor(currentWeatherData.temperature) }}°
           </p>
         </div>
       </div>
-      <!-- Wind and pecipitaion -->
-      <div class="flex justify-center items-end gap-4">
+    </div>
+
+    <div class="bg-bg-light rounded-full text-white w-full py-2 px-8 lg:px-0">
+      <!-- Weather Description -->
+      <div class="flex justify-center items-center gap-4">
+        <p class="text-xl">
+          {{ weatherIcon.text }}
+        </p>
+      </div>
+
+      <!-- Weather Details -->
+      <div class="flex justify-around items-center gap-8 mt-4 px-8">
         <!-- Wind -->
-        <div class="flex justify-center items-center flex-col text-white">
-          <v-icon :name="windDirectionIcon" scale="2" />
-          <p class="text-xl text-white">
-            {{ Math.round(currentWeatherData.windspeed / 3.6) }} m/s
+        <div class="flex justify-center items-center flex-col">
+          <v-icon name="bi-wind" scale="1.5" />
+          <p class="text-md">
+            {{ Math.floor(currentWeatherData.windspeed / 3.6) }} ms
           </p>
         </div>
-
         <!-- Precipitation -->
-        <div class="flex justify-center items-center flex-col text-white">
-          <v-icon name="bi-umbrella-fill" scale="2" />
-          <p class="text-xl text-white">
-            {{ currentWeatherData.precipitation }} mm
-          </p>
+        <div class="flex justify-center items-center flex-col">
+          <v-icon name="bi-droplet" scale="1.5" />
+          <p class="text-md">{{ currentWeatherData.precipitation }} mm</p>
+        </div>
+        <!-- Cloud Cover -->
+        <div class="flex justify-center items-center flex-col">
+          <v-icon name="bi-cloud" scale="1.5" />
+          <p class="text-md">{{ currentWeatherData.cloudcover }}%</p>
         </div>
       </div>
     </div>

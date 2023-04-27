@@ -1,5 +1,13 @@
 import { WeatherData, WeatherDay, WeatherHour } from "./types"
 
+export const getFirstWord = (str: string) => {
+  return str.split(', ')[0];
+};
+
+export const removeFirstWord = (str: string) => {
+  return str.split(', ').slice(1).join(', ');
+};
+
 export const getWeatherIcon = (weatherCode: number) => {
   switch (weatherCode) {
     case 0:

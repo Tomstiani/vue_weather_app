@@ -2,7 +2,7 @@
 import axios from "axios";
 import { ref, watchEffect } from "vue";
 import CurrentWeatherComponent from "./currentWeatherComponent.vue";
-import { parseWeatherData } from "./../utils.ts";
+import { getFirstWord, parseWeatherData, removeFirstWord } from "./../utils.ts";
 
 const props = defineProps(["selectedLocation"]);
 
@@ -51,21 +51,24 @@ watchEffect(async () => {
     <!-- Location selected -->
     <div
       v-else
-      class="h-full w-full flex justify-start items-center flex-col max-w-5xl px-4"
+      class="h-full w-full flex justify-start items-start flex-col max-w-5xl px-4"
     >
       <!-- Title -->
       <div class="w-full flex justify-center items-start flex-col">
         <p class="text-2xl text-white">
-          {{ selectedLocation.place_name }}
+          {{ getFirstWord(selectedLocation.place_name) }}
         </p>
-        <p class="text-bg-light text-lg">
-          {{ selectedLocation.center[1] }},
-          {{ selectedLocation.center[0] }}
+        <p class="text-gray-500 text-lg">
+          {{ removeFirstWord(selectedLocation.place_name) }}
         </p>
       </div>
 
-      <!-- Current Weather -->
-      <CurrentWeatherComponent :weather-data="weatherData" />
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row self-center gap-4 w-full mt-4"
+      >
+        <!-- Current Weather -->
+        <CurrentWeatherComponent :weather-data="weatherData" />
+      </div>
     </div>
   </div>
 </template>
